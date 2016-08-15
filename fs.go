@@ -3,7 +3,7 @@ package gluafs
 import (
 	"io/ioutil"
 	"os"
-
+	"strconv"
 	"fmt"
 	"github.com/yookoala/realpath"
 	"github.com/yuin/gopher-lua"
@@ -70,14 +70,27 @@ func read(L *lua.LState) int {
 func write(L *lua.LState) int {
 	p := L.CheckString(1)
 	content := []byte(L.CheckString(2))
+	var mode os.FileMode = 0600
 
-	err := ioutil.WriteFile(p, content, os.ModePerm)
-	if err != nil {
-		L.Push(lua.LBool(false))
-		return 1
+	top := L.GetTop()
+	if top == 3 {
+		m, err := oct2decimal(L.CheckInt(3))
+		if err != nil {
+			L.Push(lua.LNil)
+			L.Push(lua.LString(err.Error()))
+			return 2
+		}
+		mode = os.FileMode(m)
 	}
 
-	L.Push(lua.LBool(true))
+	err := ioutil.WriteFile(p, content, mode)
+	if err != nil {
+		L.Push(lua.LNil)
+		L.Push(lua.LString(err.Error()))
+		return 2
+	}
+
+	L.Push(lua.LTrue)
 	return 1
 }
 
@@ -288,4 +301,8 @@ func isDir(path string) (ret bool) {
 	}
 
 	return fi.IsDir()
+}
+
+func oct2decimal(oct int) (uint64, error) {
+	return strconv.ParseUint(fmt.Sprintf("%d", oct), 8, 32)
 }

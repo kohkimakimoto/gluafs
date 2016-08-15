@@ -18,7 +18,9 @@ Returns true if the file exists.
 
 Reads the file content and return it. If this function fails, it returns `nil`, plus a string describing the error.
 
-### `fs.write(file, content)`
+### `fs.write(file, content, [mode])`
+
+Writes the content to the file. If this function fails, it returns `nil`, plus a string describing the error.
 
 ### `fs.mkdir(path, recursive)`
 

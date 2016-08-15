@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"testing"
+	"fmt"
 )
 
 func TestExists(t *testing.T) {
@@ -49,6 +50,35 @@ assert(content == "aaaaaaaabbbbbbbb")
 local content2, err = fs.read("` + tmpFile.Name() + `.hoge")
 assert(content2 == nil)
 
+
+	`); err != nil {
+		t.Error(err)
+	}
+}
+
+func TestWrite(t *testing.T) {
+	tmpDir, err := ioutil.TempDir("", "")
+	if err != nil {
+		t.Errorf("should not raise error: %v", err)
+	}
+	defer func() {
+		os.RemoveAll(tmpDir)
+	}()
+
+	L := lua.NewState()
+	defer L.Close()
+	fmt.Println(tmpDir)
+
+	L.PreloadModule("fs", Loader)
+	if err := L.DoString(`
+local fs = require("fs")
+local ret, err = fs.write("` + tmpDir + `/hoge", "aaaaaaaabbbbbbbb", 755)
+local content = fs.read("` + tmpDir + `/hoge")
+
+assert(content == "aaaaaaaabbbbbbbb")
+
+ret, err = fs.write("` + tmpDir + `/hoge/aaaa", "aaaaaaaabbbbbbbb")
+assert(ret == nil)
 
 	`); err != nil {
 		t.Error(err)
