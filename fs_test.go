@@ -83,7 +83,6 @@ assert(ret == nil)
 	}
 }
 
-
 func TestMkdir(t *testing.T) {
 	tmpDir, err := ioutil.TempDir("", "")
 	if err != nil {

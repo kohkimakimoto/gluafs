@@ -26,9 +26,13 @@ Writes the content to the file. If this function fails, it returns `nil`, plus a
 
 Create the directory. If this function fails, it returns `nil`, plus a string describing the error.
 
-### `fs.remove(path, recursive)`
+### `fs.remove(path, [recursive])`
+
+Remove the path. If this function fails, it returns `nil`, plus a string describing the error.
 
 ### `fs.symlink(target, link)`
+
+Create the symbolic link. If this function fails, it returns `nil`, plus a string describing the error.
 
 ### `fs.dirname(file)`
 

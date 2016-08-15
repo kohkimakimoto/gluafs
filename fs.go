@@ -1,13 +1,13 @@
 package gluafs
 
 import (
-	"io/ioutil"
-	"os"
-	"strconv"
 	"fmt"
 	"github.com/yookoala/realpath"
 	"github.com/yuin/gopher-lua"
+	"io/ioutil"
+	"os"
 	"path/filepath"
+	"strconv"
 )
 
 func Loader(L *lua.LState) int {
@@ -110,7 +110,7 @@ func mkdir(L *lua.LState) int {
 	}
 
 	recursive := false
-	if top == 3 {
+	if top >= 3 {
 		recursive = L.ToBool(3)
 	}
 
@@ -148,7 +148,7 @@ func remove(L *lua.LState) int {
 	}
 
 	if err != nil {
-		L.Push(lua.LFalse)
+		L.Push(lua.LNil)
 		L.Push(lua.LString(err.Error()))
 		return 2
 	}
@@ -163,7 +163,9 @@ func symlink(L *lua.LState) int {
 
 	err := os.Symlink(target, link)
 	if err != nil {
-		panic(err)
+		L.Push(lua.LNil)
+		L.Push(lua.LString(err.Error()))
+		return 2
 	}
 
 	L.Push(lua.LTrue)
