@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"os"
 	"testing"
-	"fmt"
 )
 
 func TestExists(t *testing.T) {
@@ -67,7 +66,6 @@ func TestWrite(t *testing.T) {
 
 	L := lua.NewState()
 	defer L.Close()
-	fmt.Println(tmpDir)
 
 	L.PreloadModule("fs", Loader)
 	if err := L.DoString(`
@@ -79,6 +77,37 @@ assert(content == "aaaaaaaabbbbbbbb")
 
 ret, err = fs.write("` + tmpDir + `/hoge/aaaa", "aaaaaaaabbbbbbbb")
 assert(ret == nil)
+
+	`); err != nil {
+		t.Error(err)
+	}
+}
+
+
+func TestMkdir(t *testing.T) {
+	tmpDir, err := ioutil.TempDir("", "")
+	if err != nil {
+		t.Errorf("should not raise error: %v", err)
+	}
+	defer func() {
+		os.RemoveAll(tmpDir)
+	}()
+
+	L := lua.NewState()
+	defer L.Close()
+
+	L.PreloadModule("fs", Loader)
+	if err := L.DoString(`
+local fs = require("fs")
+local ret, err = fs.mkdir("` + tmpDir + `/hoge")
+assert(ret == true)
+
+local ret, err = fs.mkdir("` + tmpDir + `/hoge/aaa/bbb", 0777, true)
+assert(ret == true)
+
+local ret, err = fs.mkdir("` + tmpDir + `/hoge/bbb/eeee", 0777)
+assert(ret == nil)
+-- print(err)
 
 	`); err != nil {
 		t.Error(err)

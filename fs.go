@@ -100,7 +100,7 @@ func mkdir(L *lua.LState) int {
 
 	top := L.GetTop()
 	if top >= 2 {
-		m, err := oct2decimal(L.CheckInt(3))
+		m, err := oct2decimal(L.CheckInt(2))
 		if err != nil {
 			L.Push(lua.LNil)
 			L.Push(lua.LString(err.Error()))
