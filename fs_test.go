@@ -113,7 +113,6 @@ assert(ret == nil)
 	}
 }
 
-
 func TestGlob(t *testing.T) {
 	tmpDir, err := ioutil.TempDir("", "")
 	if err != nil {
