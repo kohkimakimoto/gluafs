@@ -1,8 +1,12 @@
 # gluafs
 
-filesystem utility for [gopher-lua](https://github.com/yuin/gopher-lua).
+filesystem utility for [gopher-lua](https://github.com/yuin/gopher-lua). This project is inspired by [layeh/gopher-lfs](https://github.com/layeh/gopher-lfs).
 
-Inspired by [layeh/gopher-lfs](https://github.com/layeh/gopher-lfs)
+## Installation
+
+```
+go get github.com/kohkimakimoto/gluafs
+```
 
 ## API
 
@@ -33,3 +37,11 @@ Inspired by [layeh/gopher-lfs](https://github.com/layeh/gopher-lfs)
 ### `fs.dir()`
 
 ### `fs.glob(pattern, function)`
+
+## Author
+
+Kohki Makimoto <kohki.makimoto@gmail.com>
+
+## License
+
+MIT license.
