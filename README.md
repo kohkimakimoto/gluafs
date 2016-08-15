@@ -38,6 +38,31 @@ go get github.com/kohkimakimoto/gluafs
 
 ### `fs.glob(pattern, function)`
 
+## Usage
+
+```go
+package main
+
+import (
+    "github.com/yuin/gopher-lua"
+    "github.com/kohkimakimoto/gluafs"
+)
+
+func main() {
+    L := lua.NewState()
+    defer L.Close()
+
+    L.PreloadModule("fs", gluafs.Loader)
+    if err := L.DoString(`
+local fs = require("fs")
+local ret = fs.exists("path/to/file")
+
+`); err != nil {
+        panic(err)
+    }
+}
+```
+
 ## Author
 
 Kohki Makimoto <kohki.makimoto@gmail.com>
