@@ -44,21 +44,26 @@ Returns the last element of path.
 
 ### `fs.realpath(path)`
 
-Returns the real path of a given path in the os. If this function fails, it returns `nil`, plus a string describing
+Returns the real path of a given path in the os. If this function fails, it returns `nil`, plus a string describing the error.
 
 ### `fs.getcwd()`
 
-Returns the current working directory. If this function fails, it returns `nil`, plus a string describing
+Returns the current working directory. If this function fails, it returns `nil`, plus a string describing the error.
 
 ### `fs.chdir(path)`
 
-Changes the current working directory. If this function fails, it returns `nil`, plus a string describing
+Changes the current working directory. If this function fails, it returns `nil`, plus a string describing the error.
 
 ### `fs.file()`
 
+Returns file path. If this function fails, it returns `nil`, plus a string describing the error.
+
 ### `fs.dir()`
 
+Returns directory path. If this function fails, it returns `nil`, plus a string describing the error.
+
 ### `fs.glob(pattern, function)`
+
 
 ## Usage
 

@@ -235,15 +235,15 @@ func file(L *lua.LState) int {
 
 	dbg, ok = L.GetStack(1)
 	if !ok {
-		fmt.Println(dbg)
 		L.Push(lua.LNil)
-		return 1
+		L.Push(lua.LString(fmt.Sprint(dbg)))
+		return 2
 	}
 	_, err = L.GetInfo("S", dbg, lua.LNil)
 	if err != nil {
-		fmt.Println(err)
 		L.Push(lua.LNil)
-		return 1
+		L.Push(lua.LString(err.Error()))
+		return 2
 	}
 
 	L.Push(lua.LString(dbg.Source))
@@ -258,15 +258,15 @@ func dir(L *lua.LState) int {
 
 	dbg, ok = L.GetStack(1)
 	if !ok {
-		fmt.Println(dbg)
 		L.Push(lua.LNil)
-		return 1
+		L.Push(lua.LString(fmt.Sprint(dbg)))
+		return 2
 	}
 	_, err = L.GetInfo("S", dbg, lua.LNil)
 	if err != nil {
-		fmt.Println(err)
 		L.Push(lua.LNil)
-		return 1
+		L.Push(lua.LString(err.Error()))
+		return 2
 	}
 
 	dirname := filepath.Dir(dbg.Source)
@@ -281,8 +281,9 @@ func glob(L *lua.LState) int {
 
 	files, err := filepath.Glob(ptn)
 	if err != nil {
-		L.RaiseError("Invalid pattern: " + ptn)
-		return 0
+		L.Push(lua.LNil)
+		L.Push(lua.LString(err.Error()))
+		return 2
 	}
 
 	for _, f := range files {
@@ -290,7 +291,9 @@ func glob(L *lua.LState) int {
 		tb.RawSetString("path", lua.LString(f))
 		abspath, err := filepath.Abs(f)
 		if err != nil {
-			L.RaiseError("Invalid path: " + f)
+			L.Push(lua.LNil)
+			L.Push(lua.LString(err.Error()))
+			return 2
 		}
 		tb.RawSetString("realpath", lua.LString(abspath))
 
@@ -300,11 +303,14 @@ func glob(L *lua.LState) int {
 			Protect: true,
 		}, tb)
 		if err != nil {
-			panic(err)
+			L.Push(lua.LNil)
+			L.Push(lua.LString(err.Error()))
+			return 2
 		}
 	}
 
-	return 0
+	L.Push(lua.LTrue)
+	return 1
 }
 
 func isDir(path string) (ret bool) {
