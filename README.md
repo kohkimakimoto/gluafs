@@ -56,11 +56,11 @@ Changes the current working directory. If this function fails, it returns `nil`,
 
 ### `fs.file()`
 
-Returns file path. If this function fails, it returns `nil`, plus a string describing the error.
+Returns the script file path. If this function fails, it returns `nil`, plus a string describing the error.
 
 ### `fs.dir()`
 
-Returns directory path. If this function fails, it returns `nil`, plus a string describing the error.
+Returns the directory path that is parent of the script file. If this function fails, it returns `nil`, plus a string describing the error.
 
 ### `fs.glob(pattern, function)`
 
