@@ -64,6 +64,15 @@ Returns directory path. If this function fails, it returns `nil`, plus a string 
 
 ### `fs.glob(pattern, function)`
 
+Run the callback function with the files matching pattern. See below example:
+
+```
+local fs = require("fs")
+local ret, err = fs.glob("/tmp/*", function(file)
+	print(file.path)
+	print(file.realpath)
+end)
+```
 
 ## Usage
 
