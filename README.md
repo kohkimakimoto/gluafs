@@ -12,6 +12,8 @@ go get github.com/kohkimakimoto/gluafs
 
 ### `fs.exists(file)`
 
+Returns true if the file exists.
+
 ### `fs.read(file)`
 
 ### `fs.write(file, content)`
