@@ -22,7 +22,9 @@ Reads the file content and return it. If this function fails, it returns `nil`, 
 
 Writes the content to the file. If this function fails, it returns `nil`, plus a string describing the error.
 
-### `fs.mkdir(path, recursive)`
+### `fs.mkdir(path, [mode, recursive])`
+
+Create the directory. If this function fails, it returns `nil`, plus a string describing the error.
 
 ### `fs.remove(path, recursive)`
 

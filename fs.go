@@ -70,7 +70,7 @@ func read(L *lua.LState) int {
 func write(L *lua.LState) int {
 	p := L.CheckString(1)
 	content := []byte(L.CheckString(2))
-	var mode os.FileMode = 0600
+	var mode os.FileMode = 0666
 
 	top := L.GetTop()
 	if top == 3 {
@@ -96,26 +96,33 @@ func write(L *lua.LState) int {
 
 func mkdir(L *lua.LState) int {
 	dir := L.CheckString(1)
+	var mode os.FileMode = 0777
 
-	perm := 0777
-	if L.GetTop() >= 2 {
-		perm = L.ToInt(2)
+	top := L.GetTop()
+	if top >= 2 {
+		m, err := oct2decimal(L.CheckInt(3))
+		if err != nil {
+			L.Push(lua.LNil)
+			L.Push(lua.LString(err.Error()))
+			return 2
+		}
+		mode = os.FileMode(m)
 	}
 
 	recursive := false
-	if L.GetTop() >= 3 {
+	if top == 3 {
 		recursive = L.ToBool(3)
 	}
 
 	var err error
 	if recursive {
-		err = os.MkdirAll(dir, os.FileMode(perm))
+		err = os.MkdirAll(dir, mode)
 	} else {
-		err = os.Mkdir(dir, os.FileMode(perm))
+		err = os.Mkdir(dir, mode)
 	}
 
 	if err != nil {
-		L.Push(lua.LFalse)
+		L.Push(lua.LNil)
 		L.Push(lua.LString(err.Error()))
 		return 2
 	}
