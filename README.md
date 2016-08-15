@@ -48,9 +48,11 @@ Returns the real path of a given path in the os. If this function fails, it retu
 
 ### `fs.getcwd()`
 
-Returns a current working directory.  If this function fails, it returns `nil`, plus a string describing
+Returns the current working directory. If this function fails, it returns `nil`, plus a string describing
 
 ### `fs.chdir(path)`
+
+Changes the current working directory. If this function fails, it returns `nil`, plus a string describing
 
 ### `fs.file()`
 
