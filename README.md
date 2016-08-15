@@ -16,6 +16,8 @@ Returns true if the file exists.
 
 ### `fs.read(file)`
 
+Reads the file content and return it. If this function fails, it returns `nil`, plus a string describing the error.
+
 ### `fs.write(file, content)`
 
 ### `fs.mkdir(path, recursive)`

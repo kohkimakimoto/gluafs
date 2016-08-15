@@ -52,13 +52,15 @@ func read(L *lua.LState) int {
 	path := L.CheckString(1)
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		L.Push(lua.LNil)
-		return 1
+		L.Push(lua.LString(err.Error()))
+		return 2
 	}
 
 	content, err := ioutil.ReadFile(path)
 	if err != nil {
 		L.Push(lua.LNil)
-		return 1
+		L.Push(lua.LString(err.Error()))
+		return 2
 	}
 
 	L.Push(lua.LString(string(content)))
