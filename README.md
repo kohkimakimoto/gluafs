@@ -16,31 +16,39 @@ Returns true if the file exists.
 
 ### `fs.read(file)`
 
-Reads the file content and return it. If this function fails, it returns `nil`, plus a string describing the error.
+Reads file content and return it. If this function fails, it returns `nil`, plus a string describing the error.
 
 ### `fs.write(file, content, [mode])`
 
-Writes the content to the file. If this function fails, it returns `nil`, plus a string describing the error.
+Writes content to the file. If this function fails, it returns `nil`, plus a string describing the error.
 
 ### `fs.mkdir(path, [mode, recursive])`
 
-Create the directory. If this function fails, it returns `nil`, plus a string describing the error.
+Create directory. If this function fails, it returns `nil`, plus a string describing the error.
 
 ### `fs.remove(path, [recursive])`
 
-Remove the path. If this function fails, it returns `nil`, plus a string describing the error.
+Remove path. If this function fails, it returns `nil`, plus a string describing the error.
 
 ### `fs.symlink(target, link)`
 
-Create the symbolic link. If this function fails, it returns `nil`, plus a string describing the error.
+Create symbolic link. If this function fails, it returns `nil`, plus a string describing the error.
 
-### `fs.dirname(file)`
+### `fs.dirname(path)`
 
-### `fs.basename(file)`
+Returns all but the last element of path.
 
-### `fs.realpath(file)`
+### `fs.basename(path)`
+
+Returns the last element of path.
+
+### `fs.realpath(path)`
+
+Returns the real path of a given path in the os. If this function fails, it returns `nil`, plus a string describing
 
 ### `fs.getcwd()`
+
+Returns a current working directory.  If this function fails, it returns `nil`, plus a string describing
 
 ### `fs.chdir(path)`
 

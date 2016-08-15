@@ -188,24 +188,28 @@ func basename(L *lua.LState) int {
 	return 1
 }
 
-func getcwd(L *lua.LState) int {
-	dir, err := os.Getwd()
-	if err != nil {
-		panic(err)
-	}
-	L.Push(lua.LString(dir))
-
-	return 1
-}
-
 func fnRealpath(L *lua.LState) int {
 	filep := L.CheckString(1)
 
 	real, err := realpath.Realpath(filep)
 	if err != nil {
-		panic(err)
+		L.Push(lua.LNil)
+		L.Push(lua.LString(err.Error()))
+		return 2
 	}
 	L.Push(lua.LString(real))
+
+	return 1
+}
+
+func getcwd(L *lua.LState) int {
+	dir, err := os.Getwd()
+	if err != nil {
+		L.Push(lua.LNil)
+		L.Push(lua.LString(err.Error()))
+		return 2
+	}
+	L.Push(lua.LString(dir))
 
 	return 1
 }
